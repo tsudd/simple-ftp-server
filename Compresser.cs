@@ -10,13 +10,13 @@ namespace FileWatcherService
 {
     public static class Compresser
     { 
-        public static void Compress(string pathToFile, string compressedName)
+        public static void Compress(string pathToFile, string compressedName, ArchiveOptions archiveOptions)
         {
             using (var sourceStream = new FileStream(pathToFile, FileMode.OpenOrCreate))
             {
                 using (var targetStream = File.Open(compressedName, FileMode.Create))
                 {
-                    using (var compressionStream = new GZipStream(targetStream, CompressionLevel.Optimal))
+                    using (var compressionStream = new GZipStream(targetStream, archiveOptions.CompressionLevel))
                     {
                         sourceStream.CopyTo(compressionStream);
                     }

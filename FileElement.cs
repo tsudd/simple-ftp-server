@@ -24,7 +24,7 @@ namespace FileWatcherService
                 return;
             }
             string pathToMove = PathHelper.GetNameOfNewFile(
-                placeToMove + Info.Name.Substring(0, Info.Name.LastIndexOf('.')),
+                placeToMove + "\\" + Info.Name.Substring(0, Info.Name.LastIndexOf('.')),
                 Info.Extension
                 );
             File.Move(Info.FullName, pathToMove);
@@ -38,22 +38,22 @@ namespace FileWatcherService
                 return;
             }
             string pathToCopy = PathHelper.GetNameOfNewFile(
-                placeToCopy + Info.Name.Substring(0, Info.Name.IndexOf(Info.Extension)),
+                placeToCopy + "\\" + Info.Name.Substring(0, Info.Name.IndexOf(Info.Extension)),
                 Info.Extension
                 );
             File.Copy(Info.FullName, pathToCopy);
         }
 
-        public string Compress(string place)
+        public string Compress(string place, ArchiveOptions archiveOptions)
         {
             if (!Info.Exists)
             {
                 return null;
             }
             string compressedName = PathHelper.GetNameOfNewFile(
-                place + Info.Name,
+                place + "\\" + Info.Name,
                 COMPRESSED_TYPE);
-            Compresser.Compress(Info.FullName, compressedName);
+            Compresser.Compress(Info.FullName, compressedName, archiveOptions);
             return compressedName;
         }
 
@@ -64,7 +64,7 @@ namespace FileWatcherService
                 return null;
             }
             string decompressedName = PathHelper.GetNameOfNewFile(
-                place + Info.Name.Substring(0, Info.Name.IndexOf(".")),
+                place + "\\" + Info.Name.Substring(0, Info.Name.IndexOf(".")),
                 PathHelper.GetTypeOfTheFile(Info.Name.Substring(0, Info.Name.IndexOf(Info.Extension)))
                 );
             Compresser.Decompress(Info.FullName, decompressedName);

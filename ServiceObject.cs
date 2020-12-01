@@ -14,25 +14,25 @@ namespace FileWatcherService
     public partial class ServiceObject : ServiceBase
     {
         private Logger logger;
-        private readonly string srcDir;
-        private readonly string targetDir;
-        private readonly string logfilePath;
+        public string ConfigDirectory { get; private set; } = @"J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\config";
         public ServiceObject()
         {
             InitializeComponent();
             CanStop = true;
             CanPauseAndContinue = true;
             AutoLog = true;
-            targetDir = "J:\\BSUIRSTUFF\\3SEM\\Labs\\ITP\\TargetDirectory\\";
-            logfilePath = @"J:\BSUIRSTUFF\3SEM\Labs\ITP\logfile.txt";
-            srcDir = @"F:\From the Internet\";
+
         }
 
         protected override void OnStart(string[] args)
         {
-            logger = new Logger(srcDir, targetDir, logfilePath);
-            var loggerThread = new Thread(new ThreadStart(logger.Start));
-            loggerThread.Start();
+            var configManager = new ConfigManager(ConfigDirectory);
+            
+            logger = new Logger(configManager.GetConfiguration<LoggingOptions>() as LoggingOptions);
+
+            var watcher = new Watcher(logger.MakeRecord, configManager);
+            var watcherThread = new Thread(new ThreadStart(watcher.Start));
+            watcherThread.Start();
         }
 
         protected override void OnStop()

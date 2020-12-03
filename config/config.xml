@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <options>
-  
+  <archiveOptions>
+    <compressionLevel>Optimal</compressionLevel>
+  </archiveOptions>
+  <pathOptions>
+    <targetDirectory>J:\BSUIRSTUFF\3SEM\Labs\ITP\TargetDirectory</targetDirectory>
+    <sourceDirectory>F:\From the Inавпвапвапternet</sourceDirectory>
+    <enableArchiveDirectory>true</enableArchiveDirectory>
+    <archiveDirectory>J:\BSUIRSTUFF\3SEM\Labs\ITP\TargetDirectory\archived</archiveDirectory>
+  </pathOptions>
+  <encryptionOptions>
+    <enableEncryption>true</enableEncryption>
+  </encryptionOptions>
+  <loggingOptions>
+    <enableLogging>true</enableLogging>
+    <logfilePath>J:\BSUIRSTUFF\3SEM\Labs\ITP\logfile.txt</logfilePath>
+  </loggingOptions>
 </options>

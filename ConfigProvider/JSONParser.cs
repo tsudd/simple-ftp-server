@@ -10,8 +10,8 @@ namespace ConfigProvider
     public class JSONParser: IParser
     {
 
-        private Regex keyObjectPattern;
-        private Regex keyValuePattern;
+        private readonly Regex keyObjectPattern;
+        private readonly Regex keyValuePattern;
         public JSONParser()
         {
             keyObjectPattern = new Regex(@"""(?<ClassName>[^""]*)""\s*:\s*\{(?<Obj>[^}]*)\}", 
@@ -24,7 +24,7 @@ namespace ConfigProvider
 
         public Dictionary<string, object> Parse(string json)
         {
-            var objects = new Dictionary<string, object>();
+            Dictionary<string, object> objects;
 
             var trimObj = new Regex(@"^\s*{[\w\W]*}\s*$");
             var match = trimObj.Match(json);
@@ -37,7 +37,7 @@ namespace ConfigProvider
             {
                 input = json;
             }
-            Console.WriteLine(input);
+            //Console.WriteLine(input);
             objects = ParseObject(input);
             
             return objects;

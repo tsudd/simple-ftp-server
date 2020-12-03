@@ -9,6 +9,7 @@ namespace FileWatcherService
     public class LoggingOptions : Options
     {
         public bool EnableLogging { get; set; } = true;
+        [Path]
         public string LogfilePath { get; set; } = "C:\\FileWatcherByTsudd\\logfile.txt";
 
         public LoggingOptions()

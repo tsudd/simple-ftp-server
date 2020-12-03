@@ -33,6 +33,7 @@ namespace FileWatcherService
             var watcher = new Watcher(logger.MakeRecord, configManager);
             var watcherThread = new Thread(new ThreadStart(watcher.Start));
             watcherThread.Start();
+            logger.MakeRecord(configManager.ConfigManagingInfo);
         }
 
         protected override void OnStop()

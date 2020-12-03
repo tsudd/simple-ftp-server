@@ -53,6 +53,7 @@
     <Compile Include="EncryptionOptions.cs" />
     <Compile Include="ETLJSONOptions.cs" />
     <Compile Include="ETLOptions.cs" />
+    <Compile Include="ETLXMLOptions.cs" />
     <Compile Include="FileElement.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="Logger.cs" />
@@ -64,6 +65,7 @@
     </Compile>
     <Compile Include="LoggingOptions.cs" />
     <Compile Include="Options.cs" />
+    <Compile Include="PathAttribute.cs" />
     <Compile Include="PathHelper.cs" />
     <Compile Include="PathOptions.cs" />
     <Compile Include="ServiceObject.cs">

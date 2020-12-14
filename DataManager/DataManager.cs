@@ -33,6 +33,7 @@ namespace DataManager
             var SL = new ServiceLayerService(connectionOptions);
             Console.WriteLine("Press any key to start pulling data.");
             Console.ReadKey();
+            Console.WriteLine("\nStart processing...\n");
             if (sendingOptions.PullMode == PullMode.FullTable)
             {
                 var persons = SL.GetAllPersons();
@@ -64,6 +65,7 @@ namespace DataManager
                 _ = transfer.TransferFile(serilialiezedFilePath, sendingOptions.SendingPlace);
                 Console.WriteLine($"New file transfered to {sendingOptions.SendingPlace}.");
             }
+            Console.WriteLine("Done.");
             Console.ReadKey();
         }
     }

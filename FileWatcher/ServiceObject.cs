@@ -10,13 +10,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ConfigManagerService;
+using Model.FileManagerOptions;
 
 namespace FileWatcherService
 {
     public partial class ServiceObject : ServiceBase
     {
         private Logger logger;
-        public string ConfigDirectory { get; private set; } = @"J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\config";
+        public string ConfigDirectory { get; private set; } = @"J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\FileWatcher\config";
         public ServiceObject()
         {
             InitializeComponent();
@@ -31,7 +32,6 @@ namespace FileWatcherService
             var configManager = new ConfigManager(ConfigDirectory);
             
             logger = new Logger(configManager.GetConfiguration<LoggingOptions>() as LoggingOptions);
-
             var watcher = new Watcher(logger.MakeRecord, configManager);
             var watcherThread = new Thread(new ThreadStart(watcher.Start));
             watcherThread.Start();

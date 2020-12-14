@@ -77,6 +77,10 @@
       <Project>{2bff5e74-4781-412f-a1e5-0357bf384b54}</Project>
       <Name>ConfigManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConfigProvider\ConfigProvider.csproj">
+      <Project>{54e0a5d3-4e5c-4916-8be4-baa47c5c48e4}</Project>
+      <Name>ConfigProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{8d614d45-e03d-4ae1-9645-6aebfe897bc0}</Project>
       <Name>Model</Name>

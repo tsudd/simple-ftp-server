@@ -24,7 +24,7 @@ namespace DataManager
                 throw new ArgumentException();
             }
             string distFileName = place + "\\" + pathToFile.Substring(pathToFile.LastIndexOf('\\'));
-            File.Copy(pathToFile, distFileName, true);
+            File.Move(pathToFile, distFileName);
             return distFileName;
         }
     }

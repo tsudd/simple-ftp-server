@@ -1,5 +1,7 @@
 ﻿using ConfigManagerService;
+using FileWatcherService.ProssessedObjects;
 using Model;
+using Model.FileManagerOptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FileWatcherService
 {
-    class Watcher
+    public class Watcher
     {
         readonly FileSystemWatcher watcher;
         readonly ArchiveOptions archiveOptions;
@@ -35,7 +37,7 @@ namespace FileWatcherService
             watcher.Created += ElementCreated;
             //watcher.Changed += ElementChanged;
             watcher.Renamed += ElementRenamed;
-            watcher.Filter = "*.txt";
+            watcher.Filter = "*.xml";
 
             targetDir = paths.TargetDirectory;
             enableArchiveDir = paths.EnableArchivation;
@@ -72,9 +74,10 @@ namespace FileWatcherService
         {
             var aesAlg = Aes.Create();
             var addedFile = new FileElement(pathToFile);
-
+            MakeRecord($"1 was added.\n");
             if (enableEncrypting)
             {
+                MakeRecord($"2 was added.\n");
                 addedFile.Encrypt(aesAlg);
                 MakeRecord($"{pathToFile} was encrypted.\n");
             }

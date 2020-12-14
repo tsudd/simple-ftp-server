@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
+using Model.FileManagerOptions;
 
 namespace ConfigManagerService
 {
@@ -73,7 +74,7 @@ namespace ConfigManagerService
                                 if (attr is PathAttribute)
                                 {
                                     var path = option.GetValue(configProperty.GetValue(config)) as string;
-                                    if (!Directory.Exists(path))
+                                    if (!Directory.Exists(path) && !File.Exists(path))
                                     {
                                         option.SetValue(obj, 
                                             option.GetValue(configProperty.GetValue(defaultConfig)));

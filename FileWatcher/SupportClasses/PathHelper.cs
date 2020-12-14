@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileWatcherService
+namespace FileWatcherService.SupportClasses
 {
     static class PathHelper
     {

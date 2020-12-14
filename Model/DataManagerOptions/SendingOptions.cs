@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.FileManagerOptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Model.DataManagerOptions
     public class SendingOptions: Options
     {
         [Path]
-        public string SendingPlace { get; set; } = "F:\\From the Internet";
+        public string SendingPlace { get; set; } = "C:\\FileWatcherByTsudd\\SourceDirectory";
         public PullMode PullMode { get; set; } = PullMode.FullTable;
         public int PackageSize { get; set; } = 100;
 

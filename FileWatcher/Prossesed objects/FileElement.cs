@@ -1,4 +1,6 @@
-﻿using Model;
+﻿using FileWatcherService.SupportClasses;
+using Model;
+using Model.FileManagerOptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,9 +9,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileWatcherService
+namespace FileWatcherService.ProssessedObjects
 {
-    class FileElement: IElement
+    public class FileElement: IElement
     {
         const string COMPRESSED_TYPE = ".gz";
         public FileInfo Info { get; private set; }

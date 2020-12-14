@@ -5,7 +5,7 @@
 ## ConfigProvider.dll
 Класс отвечающий за обработку файлов конфигов. В отличии от прежней версии дополнен методом заполнения объекта словарем свойств и их значений (для работы с сущностями получаемых из базы данных.
 ## DataAccessLayer.dll
-Сущность, предоставляющая набор методов для доступа к данным из БД посредством ADO.NET и TransactionScopes.
+Сущность, предоставляющая набор методов для доступа к данным из БД посредством ADO.NET и TransactionScopes, используя хранимые процедуры базы данных.
 ## ServiceLayer.dll
 Надстройка над DataAccessLayer, представляющая собой набор методов для более безопасной работы с данными посредством DataAccessLayer.
 ## DataManager
@@ -16,4 +16,8 @@
 ##Applications
 По итогу решение будет выглядеть следующий образом:
 
+![alt text](https://github.com/tsudd/simple-ftp-server/blob/main/Images/solve.png?raw=true)
+
 Ниже пример работы DataManager&FileManager:
+
+![alt text](https://github.com/tsudd/simple-ftp-server/blob/main/Images/gif.gif?raw=true)

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "3vewicQxVvHgAWsg0DP1x4HE6HkznN0vMWhdHfLN/qNBKcuhQnEYUAk6wRThWAPQFFnjXN1IuBOAEcFgmM8zAw==",
+  "success": true,
+  "projectFilePath": "J:\\BSUIRSTUFF\\3SEM\\Labs\\ITP\\FileWatcherService\\ConfigManager\\ConfigManager.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\RedmiBook\\.nuget\\packages\\microsoft.sqlserver.types\\14.0.1016.290\\microsoft.sqlserver.types.14.0.1016.290.nupkg.sha512",
+    "C:\\Users\\RedmiBook\\.nuget\\packages\\system.data.sqlclient\\4.8.2\\system.data.sqlclient.4.8.2.nupkg.sha512"
+  ],
+  "logs": []
+}

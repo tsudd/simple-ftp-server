@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.DataManagerOptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Model
         public ArchiveOptions ArchiveOptions { get; set; } = new ArchiveOptions();
         public LoggingOptions LoggingOptions { get; set; } = new LoggingOptions();
         public EncryptionOptions EncryptionOptions { get; set; } = new EncryptionOptions();
+        public ConnectionOptions ConnectionOptions { get; set; } = new ConnectionOptions();
+        public SendingOptions SendingOptions { get; set; } = new SendingOptions();
 
         public string ProccessInfo { get; private set; } = "";
 

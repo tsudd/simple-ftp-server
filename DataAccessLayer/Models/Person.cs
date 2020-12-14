@@ -19,7 +19,7 @@ namespace DataAccessLayer.Models
         public int EmailPromotion { get; set; }
         public string AdditionalContactInfo { get; set; }
         public string Demographics { get; set; }
-        public Guid Rowguid { get; set; }
+        public Guid rowguid { get; set; }
         public DateTime ModifiedDate { get; set; }
     }
 }

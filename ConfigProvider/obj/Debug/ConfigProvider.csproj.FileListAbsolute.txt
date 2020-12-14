@@ -4,3 +4,6 @@ J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\bin\Debug\ConfigPr
 J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\bin\Debug\ConfigProvider.pdb
 J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\obj\Debug\ConfigProvider.dll
 J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\obj\Debug\ConfigProvider.pdb
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\bin\Debug\System.Data.SqlClient.dll
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\obj\Debug\ConfigProvider.csproj.CopyComplete
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\ConfigProvider\bin\Debug\Microsoft.SqlServer.Types.dll

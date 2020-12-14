@@ -11,7 +11,7 @@ namespace Model
     {
         public ETLJSONOptions(string json): base()
         {
-            var options = ConfigProvader.Deserialize<ETLOptions>(json, new JSONParser());
+            var options = (new ConfigProvader()).Deserialize<ETLOptions>(json, new JSONParser());
             ArchiveOptions = options.ArchiveOptions;
             PathOptions.ArchiveDirectory = options.PathOptions.ArchiveDirectory;
             PathOptions.TargetDirectory = options.PathOptions.TargetDirectory;
@@ -19,6 +19,8 @@ namespace Model
             PathOptions.SourceDirectory = options.PathOptions.SourceDirectory;
             EncryptionOptions = options.EncryptionOptions;
             LoggingOptions = options.LoggingOptions;
+            ConnectionOptions = options.ConnectionOptions;
+            SendingOptions = options.SendingOptions;
         }
     }
 }

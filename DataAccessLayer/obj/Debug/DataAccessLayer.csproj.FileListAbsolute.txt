@@ -1,0 +1,13 @@
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\ConfigProvider.dll
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\Model.dll
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\ConfigProvider.pdb
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\Model.pdb
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\System.Data.SqlClient.dll
+J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataAccessLayer\bin\Debug\Microsoft.SqlServer.Types.dll

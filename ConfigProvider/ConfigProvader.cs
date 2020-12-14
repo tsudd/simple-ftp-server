@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace ConfigProvider
 {
-    public static class ConfigProvader
+    public class ConfigProvader
     {
-        public static T Deserialize<T>(string input, IParser parser)
+        public ConfigProvader()
+        {
+
+        }
+        public T Deserialize<T>(string input, IParser parser)
         {
             T ans;
 
@@ -83,7 +87,7 @@ namespace ConfigProvider
             }
             else
             {
-                throw new Exception("This type doesn't contain member with this name");
+                //throw new Exception("This type doesn't contain member with this name");
             }
         }
 
@@ -94,11 +98,25 @@ namespace ConfigProvider
             {
                 type1 = type.GetField(memberName)?.FieldType;
             }
-            if (type1 == null)
-            {
-                throw new Exception("This type doesn't contain member with this name");
-            }
             return type1;
+        }
+
+        public T Map<T>(Dictionary<string, object> dict)
+        {
+            T ans = (T)Activator.CreateInstance(typeof(T));
+            foreach (KeyValuePair<string, object> pair in dict)
+            {
+                if (pair.Value.GetType() == typeof(DBNull))
+                {
+                    SetMemberValue(ans, pair.Key, null);
+                }
+                else
+                {
+                    SetMemberValue(ans, pair.Key, pair.Value);
+                }
+
+            }
+            return ans;
         }
     }
 }

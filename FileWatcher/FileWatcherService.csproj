@@ -46,16 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveOptions.cs" />
     <Compile Include="Compresser.cs" />
-    <Compile Include="ConfigManager.cs" />
     <Compile Include="Crypter.cs" />
-    <Compile Include="EncryptionOptions.cs" />
-    <Compile Include="ETLJSONOptions.cs" />
-    <Compile Include="ETLOptions.cs" />
-    <Compile Include="ETLXMLOptions.cs" />
-    <Compile Include="FileElement.cs" />
-    <Compile Include="IElement.cs" />
+    <Compile Include="Prossesed objects\FileElement.cs" />
+    <Compile Include="Prossesed objects\IElement.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Installer1.cs">
       <SubType>Component</SubType>
@@ -63,11 +57,7 @@
     <Compile Include="Installer1.Designer.cs">
       <DependentUpon>Installer1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoggingOptions.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="PathAttribute.cs" />
-    <Compile Include="PathHelper.cs" />
-    <Compile Include="PathOptions.cs" />
+    <Compile Include="SupportClasses\PathHelper.cs" />
     <Compile Include="ServiceObject.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -83,13 +73,25 @@
     <None Include="config\appsettings.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="ConfigProvider\ConfigProvider.csproj">
-      <Project>{54e0a5d3-4e5c-4916-8be4-baa47c5c48e4}</Project>
-      <Name>ConfigProvider</Name>
+    <ProjectReference Include="..\ConfigManager\ConfigManager.csproj">
+      <Project>{2bff5e74-4781-412f-a1e5-0357bf384b54}</Project>
+      <Name>ConfigManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{8d614d45-e03d-4ae1-9645-6aebfe897bc0}</Project>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="config\config.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SqlServer.Types">
+      <Version>14.0.1016.290</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SqlClient">
+      <Version>4.8.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

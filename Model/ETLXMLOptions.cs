@@ -11,7 +11,7 @@ namespace Model
     {
         public ETLXMLOptions(string xml): base()
         {
-            var options = ConfigProvader.Deserialize<ETLOptions>(xml, new XMLParser());
+            var options = (new ConfigProvader()).Deserialize<ETLOptions>(xml, new XMLParser());
             ArchiveOptions = options.ArchiveOptions;
             PathOptions.ArchiveDirectory = options.PathOptions.ArchiveDirectory;
             PathOptions.TargetDirectory = options.PathOptions.TargetDirectory;
@@ -19,6 +19,8 @@ namespace Model
             PathOptions.SourceDirectory = options.PathOptions.SourceDirectory;
             EncryptionOptions = options.EncryptionOptions;
             LoggingOptions = options.LoggingOptions;
+            ConnectionOptions = options.ConnectionOptions;
+            SendingOptions = options.SendingOptions;
         }
     }
 }

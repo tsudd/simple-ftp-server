@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<options>
+  <connectionOptions>
+    <dataSource>TSUDDBOOK</dataSource>
+    <initialCatalog>AdventureWorks2017</initialCatalog>
+    <user>Baiden</user>
+    <password>samalabadumaldimarubberman</password>
+    <integratedSecurity>true</integratedSecurity>
+  </connectionOptions>
+  <sendingOptions>
+    <sendingPlace>J:\BSUIRSTUFF\3SEM\Labs\ITP</sendingPlace>
+    <pullMode>FullTable</pullMode>
+    <packageSize>200</packageSize>
+  </sendingOptions>
+</options>

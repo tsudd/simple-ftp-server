@@ -6,7 +6,7 @@
   </archiveOptions>
   <pathOptions>
     <targetDirectory>J:\BSUIRSTUFF\3SEM\Labs\ITP\TargetDirectory</targetDirectory>
-    <sourceDirectory>F:\From the Inавпвапвапternet</sourceDirectory>
+    <sourceDirectory>J:\BSUIRSTUFF\3SEM\Labs\ITP</sourceDirectory>
     <enableArchiveDirectory>true</enableArchiveDirectory>
     <archiveDirectory>J:\BSUIRSTUFF\3SEM\Labs\ITP\TargetDirectory\archived</archiveDirectory>
   </pathOptions>

@@ -64,35 +64,36 @@ namespace FileWatcherService
             MakeRecord($"{e.FullPath} was deleted.\n");
         }
 
-        private void ElementCreated(object sender, FileSystemEventArgs e)
+        private async void ElementCreated(object sender, FileSystemEventArgs e)
         {
             MakeRecord($"{e.FullPath} was added.\n");
-            TransferElement(e.FullPath);
+            await TransferElement(e.FullPath);
         }
 
-        private void TransferElement(string pathToFile)
+        private async Task TransferElement(string pathToFile)
         {
             var aesAlg = Aes.Create();
             var addedFile = new FileElement(pathToFile);
             MakeRecord($"1 was added.\n");
+            AwaitFileToClose(addedFile.Info.FullName);
             if (enableEncrypting)
             {
                 MakeRecord($"2 was added.\n");
-                addedFile.Encrypt(aesAlg);
+                await addedFile.EncryptAsync(aesAlg);
                 MakeRecord($"{pathToFile} was encrypted.\n");
             }
 
-            var compressedFile = new FileElement(addedFile.Compress(targetDir, archiveOptions));
+            var compressedFile = new FileElement(await addedFile.CompressAsync(targetDir, archiveOptions));
             MakeRecord($"{pathToFile} was compressed.\n");
 
-            var decompressedFile = new FileElement(compressedFile.Decompress(targetDir));
+            var decompressedFile = new FileElement(await compressedFile.DecompressAsync(targetDir));
             MakeRecord($"{decompressedFile.Info.FullName} was moved.\n");
 
             if (enableEncrypting)
             {
-                decompressedFile.Decrypt(aesAlg);
+                await decompressedFile.DecryptAsync(aesAlg);
                 MakeRecord($"{decompressedFile.Info.FullName} was decrypted.\n");
-                addedFile.Decrypt(aesAlg);
+                await addedFile.DecryptAsync(aesAlg);
             }
 
             if (enableArchiveDir)
@@ -155,5 +156,23 @@ namespace FileWatcherService
             MakeRecord("Service was disabled");
         }
 
+        private static void AwaitFileToClose(string path)
+        {
+            while (true)
+            {
+                try
+                {
+                    using (var stream = new FileStream(path, FileMode.Open))
+                    {
+                        return;
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
     }
 }

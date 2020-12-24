@@ -65,5 +65,55 @@ namespace ServiceLayer
             var personInfo = new PersonGeneral(person, password, email, personPhone, address);
             return personInfo;
         }
+
+        public async Task<int> GetMaxIdAsync()
+        {
+            return await DAL.GetMaxIdAsync();
+        }
+
+        public async Task<PersonGeneral> GetAllPersonInfoAsync(int id)
+        {
+            var person = await DAL.GetPersonByIdAsync(id);
+            var personGeneral = await LoadPersonDataAsync(person);
+            return personGeneral;
+        }
+
+        public async Task<List<PersonGeneral>> GetAllPersonsAsync()
+        {
+            var persons = await DAL.GetPeopleAsync();
+            var ans = new List<PersonGeneral>();
+            foreach (var person in persons)
+            {
+                ans.Add(await LoadPersonDataAsync(person));
+            }
+            return ans;
+        }
+
+        public async Task<List<PersonGeneral>> GetPeopleInRangeAsync(int startInd, int endInd)
+        {
+            var persons = await DAL.GetPeopleRangeAsync(startInd, endInd);
+            var ans = new List<PersonGeneral>();
+            foreach (var person in persons)
+            {
+                ans.Add(await LoadPersonDataAsync(person));
+            }
+            return ans;
+        }
+
+        public async Task<List<PersonGeneral>> GetPeopleJoinAsync()
+        {
+            return await DAL.GetPeopleWithJoinAsync();
+        }
+
+        private async Task<PersonGeneral> LoadPersonDataAsync(Person person)
+        {
+            int id = person.BusinessEntityID;
+            var password = await DAL.GetPasswordByIdAsync(id);
+            var email = await DAL.GetEmailByIdAsync(id);
+            var personPhone = await DAL.GetPhoneByIdAsync(id);
+            var address = await DAL.GetAddressByIdAsync(id);
+            var personInfo = new PersonGeneral(person, password, email, personPhone, address);
+            return personInfo;
+        }
     }
 }

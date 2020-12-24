@@ -27,7 +27,7 @@ namespace ConfigManagerService
             string config;
             try
             {
-                using (StreamReader stream = new StreamReader($"{mainPath}\\appsettings.json"))
+                using (var stream = new StreamReader($"{mainPath}\\appsettings.json"))
                 {
                     config = stream.ReadToEnd();
                 }
@@ -41,7 +41,7 @@ namespace ConfigManagerService
             }
             try
             {
-                using (StreamReader stream = new StreamReader($"{mainPath}\\config.xml"))
+                using (var stream = new StreamReader($"{mainPath}\\config.xml"))
                 {
                     config = stream.ReadToEnd();
                 }

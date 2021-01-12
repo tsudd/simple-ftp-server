@@ -1,5 +1,9 @@
 # DataManager & FTP server
-Последние коммиты дополнили FTP сервер классами, работующими с базами данных. Если по порядку:
+На данной ветке находится версия решения с асинхронными методами. Были дописаны асинхронными методами классы DataAccessLayer, ServiceLayer, FileWatcher, а так же классы шифрования, сжатия и работающий с последники класс FileElement, являющийся абстракцией файла операционной системы. Иными словами теперь каждый из перечисленных файлов имеет синхронную и асинхронную версии ввода/вывода/работы с данными.
+Процесс работы асинхронного запроса, а также, в частности, асинхронная обработка добавляемых файлов FileWatcher'ом представлены на футаже ниже.
+
+![alt text](https://github.com/tsudd/simple-ftp-server/blob/fiveslab/Images/video.gif?raw=true)
+
 ## ConfigManager.dll
 Класс предоставляющий шаблонные методы для заполненния моделей конфигурации. Для удобства вынесен в отдельную либу.
 ## ConfigProvider.dll
@@ -13,11 +17,5 @@
 ## Model.dll
 Библиотека классов, содержащая в себе модели конфигураций из предыдущей работы для FileManager'a, но дополнена моделями для опций DataManager'a.         
 
-##Applications
-По итогу решение будет выглядеть следующий образом:
+![alt text](https://github.com/tsudd/simple-ftp-server/blob/fiveslab/Images/solve.png?raw=true)
 
-![alt text](https://github.com/tsudd/simple-ftp-server/blob/main/Images/solve.png?raw=true)
-
-Ниже пример работы DataManager&FileManager:
-
-![alt text](https://github.com/tsudd/simple-ftp-server/blob/main/Images/gif.gif?raw=true)

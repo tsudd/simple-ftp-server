@@ -16,6 +16,11 @@ namespace FileWatcherService
         string Decompress(string place);
         void Encrypt(object alg);
         void Decrypt(object alg);
+        Task<string> CompressAsync(string place, ArchiveOptions archiveOptions);
+        Task<string> DecompressAsync(string place);
+        Task EncryptAsync(object alg);
+        Task DecryptAsync(object alg);
+
         void Delete();
     }
 }

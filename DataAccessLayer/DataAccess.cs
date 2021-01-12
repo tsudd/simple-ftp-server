@@ -253,22 +253,6 @@ namespace DataAccessLayer
             return ans;
         }
 
-        public int GetMaxId()
-        {
-            int ans = 0;
-            var command = new SqlCommand(GET_MAX_ID, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            using (var scope = new TransactionScope())
-            {
-                var reader = command.ExecuteReader();
-                reader.Read();
-                ans = reader.GetInt32(0);
-                reader.Close();
-                scope.Complete();
-            }
-            return ans;
-        }
-
         private List<T> Map<T>(SqlDataReader reader, ConfigProvader config)
         {
             var parsed = Parse(reader);
@@ -295,6 +279,278 @@ namespace DataAccessLayer
                 ans.Add(dict);
             }
             reader.Close();
+            return ans;
+        }
+
+        public async Task<Person> GetPersonByIdAsync(int id)
+        {
+            var command = new SqlCommand(GET_PERSON_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("idArg", id));
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var ans = await MapAsync<Person>(command.ExecuteReader(), config);
+                scope.Complete();
+                if (ans.Count == 0)
+                {
+                    return new Person();
+                }
+                else
+                {
+                    return ans.First();
+                }
+            }
+        }
+
+        public async Task<List<Person>> GetPeopleAsync()
+        {
+            List<Person> ans = null;
+            var command = new SqlCommand(GET_PEOPLE_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                ans = await MapAsync<Person>(command.ExecuteReader(), config);
+                scope.Complete();
+            }
+            return ans;
+        }
+
+        public async Task<List<Person>> GetPeopleRangeAsync(int startIndex, int count)
+        {
+            List<Person> ans = null;
+            SqlCommand command = new SqlCommand(GET_PEOPLE_RANGE_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("startInd", startIndex));
+            command.Parameters.Add(new SqlParameter("endInd", count));
+
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                scope.Complete();
+                ans = await MapAsync<Person>(command.ExecuteReader(), config);
+            }
+            return ans;
+        }
+
+        public async Task<Password> GetPasswordByIdAsync(int id)
+        {
+            Password ans = null;
+            var command = new SqlCommand(GET_PASSWORD_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("idArg", id));
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var list = await MapAsync<Password>(command.ExecuteReader(), config);
+                scope.Complete();
+                if (list.Count == 0)
+                {
+                    ans = new Password();
+                }
+                else
+                {
+                    ans = list.First();
+                }
+            }
+            return ans;
+        }
+
+        public async Task<Email> GetEmailByIdAsync(int id)
+        {
+            Email ans = null;
+            var command = new SqlCommand(GET_EMAIL_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("intArg", id));
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var list = await MapAsync<Email>(command.ExecuteReader(), config);
+                scope.Complete();
+                if (list.Count == 0)
+                {
+                    ans = new Email();
+                }
+                else
+                {
+                    ans = list.First();
+                }
+            }
+            return ans;
+        }
+
+        public async Task<PersonPhone> GetPhoneByIdAsync(int id)
+        {
+            PersonPhone ans = null;
+            var command = new SqlCommand(GET_PHONE_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("idArg", id));
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var list = await MapAsync<PersonPhone>(command.ExecuteReader(), config);
+                scope.Complete();
+                if (list.Count == 0)
+                {
+                    ans = new PersonPhone();
+                }
+                else
+                {
+                    ans = list.First();
+                }
+            }
+            return ans;
+        }
+
+        public async Task<Address> GetAddressByIdAsync(int id)
+        {
+            Address ans = null;
+            var command = new SqlCommand(GET_ADDRESS_PROC, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("idArg", id));
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var list = await MapAsync<Address>(command.ExecuteReader(), config);
+                scope.Complete();
+                if (list.Count == 0)
+                {
+                    ans = new Address();
+                }
+                else
+                {
+                    ans = list.First();
+                }
+            }
+            return ans;
+        }
+
+        public async Task<List<PersonGeneral>> GetPeopleWithJoinAsync()
+        {
+            var ans = new List<PersonGeneral>();
+            var command = new SqlCommand(GET_PEOPLE_JOIN, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 228;
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var reader = command.ExecuteReader();
+                while (await reader.ReadAsync())
+                {
+                    var personGen = new PersonGeneral();
+
+                    var dict = new Dictionary<string, object>();
+                    for (int i = 0; i < 13; i++)
+                    {
+                        string name = reader.GetName(i);
+                        object val = reader.GetValue(i);
+                        dict.Add(name, val);
+                    }
+                    personGen.Person = config.Map<Person>(dict);
+
+                    dict = new Dictionary<string, object>();
+                    for (int i = 13; i < 18; i++)
+                    {
+                        string name = reader.GetName(i);
+                        object val = reader.GetValue(i);
+                        dict.Add(name, val);
+                    }
+                    personGen.Password = config.Map<Password>(dict);
+
+                    dict = new Dictionary<string, object>();
+                    for (int i = 18; i < 23; i++)
+                    {
+                        string name = reader.GetName(i);
+                        object val = reader.GetValue(i);
+                        dict.Add(name, val);
+                    }
+                    personGen.Email = config.Map<Email>(dict);
+
+                    dict = new Dictionary<string, object>();
+                    for (int i = 23; i < 27; i++)
+                    {
+                        string name = reader.GetName(i);
+                        object val = reader.GetValue(i);
+                        dict.Add(name, val);
+                    }
+                    personGen.PersonPhone = config.Map<PersonPhone>(dict);
+
+                    dict = new Dictionary<string, object>();
+                    for (int i = 27; i < 36; i++)
+                    {
+                        string name = reader.GetName(i);
+                        object val = null;
+                        try
+                        {
+                            val = reader.GetValue(i);
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                        dict.Add(name, val);
+                    }
+                    personGen.Address = config.Map<Address>(dict); ///daaaamn
+
+                    ans.Add(personGen);
+                }
+                reader.Close();
+            }
+            return ans;
+        }
+
+        private async Task<List<T>> MapAsync<T>(SqlDataReader reader, ConfigProvader config)
+        {
+            var parsed = await ParseAsync(reader);
+            var ans = new List<T>();
+            foreach (var dict in parsed)
+            {
+                ans.Add(config.Map<T>(dict));
+            }
+            return ans;
+        }
+
+        private async Task<List<Dictionary<string, object>>> ParseAsync(SqlDataReader reader)
+        {
+            var ans = new List<Dictionary<string, object>>();
+            while (await reader.ReadAsync())
+            {
+                var dict = new Dictionary<string, object>();
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    string name = reader.GetName(i);
+                    object val = reader.GetValue(i);
+                    dict.Add(name, val);
+                }
+                ans.Add(dict);
+            }
+            reader.Close();
+            return ans;
+        }
+
+
+        public int GetMaxId()
+        {
+            int ans = 0;
+            var command = new SqlCommand(GET_MAX_ID, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            using (var scope = new TransactionScope())
+            {
+                var reader = command.ExecuteReader();
+                reader.Read();
+                ans = reader.GetInt32(0);
+                reader.Close();
+                scope.Complete();
+            }
+            return ans;
+        }
+
+        public async Task<int> GetMaxIdAsync()
+        {
+            int ans = 0;
+            var command = new SqlCommand(GET_MAX_ID, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            using (var scope = new TransactionScope())
+            {
+                var reader = command.ExecuteReader();
+                await reader.ReadAsync();
+                ans = reader.GetInt32(0);
+                reader.Close();
+                scope.Complete();
+            }
             return ans;
         }
     }

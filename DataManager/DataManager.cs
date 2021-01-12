@@ -11,16 +11,19 @@ namespace DataManager
 {
     public class DataManager
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             string tablePullFileName = "PersonTablePull_";
 
             var config = new ConfigManager(@"J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataManager\config");
+
             Console.WriteLine("DataManager options loaded.");
+
             var sendingOptions = config.GetConfiguration<SendingOptions>() as SendingOptions;
             var connectionOptions = config.GetConfiguration<ConnectionOptions>() as ConnectionOptions;
             var transfer = new FileTransferService();
             var xmlGenarator = new XMLGeneratorService(@"J:\BSUIRSTUFF\3SEM\Labs\ITP\FileWatcherService\DataManager\DataPulls");
+
             Console.WriteLine($"DataManager has been launched with next configurations:\n" +
                 $"Sending directory - {sendingOptions.SendingPlace}\n" +
                 $"Pull mode - {sendingOptions.PullMode}\n" +
@@ -30,14 +33,18 @@ namespace DataManager
                 $"User - {connectionOptions.User}\n" +
                 $"Password - {connectionOptions.Password}\n" +
                 $"Integrated Security - {connectionOptions.IntegratedSecurity}");
+
             var SL = new ServiceLayerService(connectionOptions);
+
             Console.WriteLine("Press any key to start pulling data.");
             Console.ReadKey();
             Console.WriteLine("\nStart processing...\n");
+
             if (sendingOptions.PullMode == PullMode.FullTable)
             {
-                var persons = SL.GetAllPersons();
+                var persons = await SL.GetAllPersonsAsync();
                 var serilialiezedFilePath = xmlGenarator.GenerateXML(persons, tablePullFileName);
+
                 Console.WriteLine($"Manager had got {1} rows from DB and placed them in {serilialiezedFilePath}");
                 _ = transfer.TransferFile(serilialiezedFilePath, sendingOptions.SendingPlace);
                 Console.WriteLine($"New file transfered to {sendingOptions.SendingPlace}.");
@@ -45,11 +52,11 @@ namespace DataManager
             else if (sendingOptions.PullMode == PullMode.ByPackages)
             {
                 int currentId = 1;
-                int maxId = SL.GetMaxId();
+                int maxId = await SL.GetMaxIdAsync();
                 int packagesAmount = 0;
                 while (currentId < maxId)
                 {
-                    var persons = SL.GetPeopleInRange(currentId, currentId + sendingOptions.PackageSize);
+                    var persons = await SL.GetPeopleInRangeAsync(currentId, currentId + sendingOptions.PackageSize);
                     var serilialiezedFilePath = xmlGenarator.GenerateXML(persons, tablePullFileName + $"{currentId}-{currentId+sendingOptions.PackageSize}_");
                     _ = transfer.TransferFile(serilialiezedFilePath, sendingOptions.SendingPlace);
                     packagesAmount++;
@@ -59,10 +66,13 @@ namespace DataManager
             }
             else if (sendingOptions.PullMode == PullMode.ByJoin)
             {
-                var persons = SL.GetPeopleJoin();
+                var persons = await SL.GetPeopleJoinAsync();
                 var serilialiezedFilePath = xmlGenarator.GenerateXML(persons, tablePullFileName);
+
                 Console.WriteLine($"Manager had got {1} rows from DB and placed them in {serilialiezedFilePath}");
+
                 _ = transfer.TransferFile(serilialiezedFilePath, sendingOptions.SendingPlace);
+
                 Console.WriteLine($"New file transfered to {sendingOptions.SendingPlace}.");
             }
             Console.WriteLine("Done.");

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace FileWatcherService
 {
-    public static class Compresser
+    public  class Compresser
     { 
-        public static void Compress(string pathToFile, string compressedName, ArchiveOptions archiveOptions)
+        public  void Compress(string pathToFile, string compressedName, ArchiveOptions archiveOptions)
         {
             using (var sourceStream = new FileStream(pathToFile, FileMode.OpenOrCreate))
             {
@@ -26,7 +26,7 @@ namespace FileWatcherService
             }
         }
 
-        public static void Decompress(string pathToFile, string decompressedName)
+        public  void Decompress(string pathToFile, string decompressedName)
         {
             using (var sourceStream = new FileStream(pathToFile, FileMode.OpenOrCreate))
             {
@@ -35,6 +35,34 @@ namespace FileWatcherService
                     using (var decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress))
                     {
                         decompressionStream.CopyTo(targetStream);
+                    }
+                }
+            }
+        }
+
+        public async  Task CompressAsync(string pathToFile, string compressedName, ArchiveOptions archiveOptions)
+        {
+            using (var sourceStream = new FileStream(pathToFile, FileMode.OpenOrCreate))
+            {
+                using (var targetStream = File.Open(compressedName, FileMode.Create))
+                {
+                    using (var compressionStream = new GZipStream(targetStream, archiveOptions.CompressionLevel))
+                    {
+                        await sourceStream.CopyToAsync(compressionStream);
+                    }
+                }
+            }
+        }
+
+        public async  Task DecompressAsync(string pathToFile, string decompressedName)
+        {
+            using (var sourceStream = new FileStream(pathToFile, FileMode.OpenOrCreate))
+            {
+                using (var targetStream = new FileStream(decompressedName, FileMode.Create))
+                {
+                    using (var decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress))
+                    {
+                        await decompressionStream.CopyToAsync(targetStream);
                     }
                 }
             }

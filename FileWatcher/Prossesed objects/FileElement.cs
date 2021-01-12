@@ -14,6 +14,9 @@ namespace FileWatcherService.ProssessedObjects
     public class FileElement: IElement
     {
         const string COMPRESSED_TYPE = ".gz";
+
+        private static readonly Compresser compresser = new Compresser();
+        private static readonly Crypter crypter = new Crypter();
         public FileInfo Info { get; private set; }
 
         public FileElement(string pathToFile)
@@ -56,7 +59,7 @@ namespace FileWatcherService.ProssessedObjects
             string compressedName = PathHelper.GetNameOfNewFile(
                 place + "\\" + Info.Name,
                 COMPRESSED_TYPE);
-            Compresser.Compress(Info.FullName, compressedName, archiveOptions);
+            compresser.Compress(Info.FullName, compressedName, archiveOptions);
             return compressedName;
         }
 
@@ -70,7 +73,7 @@ namespace FileWatcherService.ProssessedObjects
                 place + "\\" + Info.Name.Substring(0, Info.Name.IndexOf(".")),
                 PathHelper.GetTypeOfTheFile(Info.Name.Substring(0, Info.Name.IndexOf(Info.Extension)))
                 );
-            Compresser.Decompress(Info.FullName, decompressedName);
+            compresser.Decompress(Info.FullName, decompressedName);
             return decompressedName;
         }
 
@@ -92,7 +95,7 @@ namespace FileWatcherService.ProssessedObjects
             byte[] array;
             using (var fstream = new StreamReader(Info.FullName))
             {
-                array = Crypter.EncryptStringToBytes(fstream.ReadToEnd(), alg.Key, alg.IV);
+                array = crypter.EncryptStringToBytes(fstream.ReadToEnd(), alg.Key, alg.IV);
             }
             using (var targetStream = new FileStream(Info.FullName, FileMode.Truncate))
             {
@@ -123,7 +126,87 @@ namespace FileWatcherService.ProssessedObjects
             }
             using (var targetStream = new StreamWriter(new FileStream(Info.FullName, FileMode.Truncate)))
             {
-                targetStream.Write(Crypter.DecryptStringFromBytes(array, alg.Key, alg.IV));
+                targetStream.Write(crypter.DecryptStringFromBytes(array, alg.Key, alg.IV));
+            }
+        }
+
+        public async Task<string> CompressAsync(string place, ArchiveOptions archiveOptions)
+        {
+            if (!Info.Exists)
+            {
+                return null;
+            }
+            string compressedName = PathHelper.GetNameOfNewFile(
+                place + "\\" + Info.Name,
+                COMPRESSED_TYPE);
+            await compresser.CompressAsync(Info.FullName, compressedName, archiveOptions);
+            return compressedName;
+        }
+
+        public async Task<string> DecompressAsync(string place)
+        {
+            if (!Info.Exists)
+            {
+                return null;
+            }
+            string decompressedName = PathHelper.GetNameOfNewFile(
+                place + "\\" + Info.Name.Substring(0, Info.Name.IndexOf(".")),
+                PathHelper.GetTypeOfTheFile(Info.Name.Substring(0, Info.Name.IndexOf(Info.Extension)))
+                );
+            await compresser.DecompressAsync(Info.FullName, decompressedName);
+            return decompressedName;
+        }
+
+        public async Task EncryptAsync(object ciphAlg)
+        {
+            if (ciphAlg == null)
+            {
+                throw new NullReferenceException("Cipher algorithm is null.");
+            }
+            Aes alg;
+            if (ciphAlg is Aes aes)
+            {
+                alg = aes;
+            }
+            else
+            {
+                throw new ArgumentException("Wrong cipher algorithm.");
+            }
+            byte[] array;
+            using (var fstream = new StreamReader(Info.FullName))
+            {
+                array = await crypter.EncryptStringToBytesAsync(await fstream.ReadToEndAsync(), alg.Key, alg.IV);
+            }
+            using (var targetStream = new FileStream(Info.FullName, FileMode.Truncate))
+            {
+                await targetStream.WriteAsync(array, 0, array.Length);
+            }
+        }
+
+        public async Task DecryptAsync(object ciphAlg)
+        {
+            if (ciphAlg == null)
+            {
+                throw new NullReferenceException("Cipher algorithm is null.");
+            }
+            Aes alg;
+            if (ciphAlg is Aes aes)
+            {
+                alg = aes;
+            }
+            else
+            {
+                throw new ArgumentException("Wrong cipher algorithm.");
+            }
+            byte[] array;
+            using (var fstream = new FileStream(Info.FullName, FileMode.Open))
+            {
+                array = new byte[fstream.Length];
+                await fstream.ReadAsync(array, 0, array.Length);
+            }
+            using (var targetStream = new StreamWriter(new FileStream(Info.FullName, FileMode.Truncate)))
+            {
+                await targetStream.WriteAsync(await crypter.DecryptStringFromBytesAsync(array, alg.Key, alg.IV));
             }
         }
 
